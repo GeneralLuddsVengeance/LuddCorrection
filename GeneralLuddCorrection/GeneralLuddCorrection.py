@@ -7,6 +7,16 @@ class GeneralLuddCorrection():
 
     def __init__(self, k, u, wv_model):
         super(GeneralLuddCorrection, self).__init__()
+        
+        print("""
+        This model is intended to correct labels for values generated through the use of an
+        LLM rather than a traditional classifier (LLMs perform sequence generation, rather
+        than compression through identifying similarities between texts, or what is
+        referred to by educated NLP practitioners and computational linguists as clustering).
+        
+        Its use is a mark of shame for the LLM hype-sters and hawkers. Do not forget that.
+        """)
+        
         self.cos = nn.CosineSimilarity(dim=-1)
 
         if isinstance(wv_model, str):
