@@ -8,16 +8,7 @@ class GeneralLuddCorrection():
     def __init__(self, k, u, wv_model):
         super(GeneralLuddCorrection, self).__init__()
         
-        print("""
-        This model is intended to correct labels for values generated through the use of an
-        LLM rather than a traditional classifier (LLMs perform sequence generation, rather
-        than compression through identifying similarities between texts, or what is
-        referred to by educated NLP practitioners and computational linguists as clustering).
-        
-        Its use is a mark of shame for the LLM hype-sters and hawkers. Do not forget that.
-        """)
-        
-        self.cos = nn.CosineSimilarity(dim=-1)
+        self.cos_similarity = nn.CosineSimilarity(dim=-1)
 
         if isinstance(wv_model, str):
             self.wv = SWV(wv_model)
@@ -40,7 +31,7 @@ class GeneralLuddCorrection():
         last_max = torch.zeros(size=(u.shape[0],)) -1
 
         for i, wv in tqdm(enumerate(k)):
-            res = self.cos(wv, u)
+            res = self.cos_similarity(wv, u)
             labels[res > last_max] = i
             last_max[res > last_max] = res[res>last_max]
 
